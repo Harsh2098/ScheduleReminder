@@ -88,6 +88,7 @@ public class DayActivity
                 if (cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_DAY)).equals(currentWeekday)) {
 
                     list.add(new Schedule(
+                            cursor.getLong(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_ID)),
                             currentWeekday,
                             cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME)),
                             cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_TIME)))
@@ -105,11 +106,11 @@ public class DayActivity
     }
 
     @Override
-    public void onDayClick(View view) {
+    public void onDayClick(long id) {
         Intent intent = new Intent(DayActivity.this, EditorActivity.class);
         intent.putExtra(MainActivity.WEEKDAY_KEY, currentWeekday);
-        intent.setData(ContentUris.withAppendedId(ScheduleContract.CONTENT_URI, day_recyclerView.getChildLayoutPosition(view)));
-        Log.v(":::", "Item ID= " + String.valueOf(day_recyclerView.getChildLayoutPosition(view)));
+        intent.setData(ContentUris.withAppendedId(ScheduleContract.CONTENT_URI, id));
+        Log.v(":::", String.valueOf(intent.getData()));
         startActivity(intent);
     }
 

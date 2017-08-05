@@ -9,11 +9,13 @@ package com.hmproductions.schedulereminder.data;
 public class Schedule {
 
     private String mDay, mName, mTime;
+    private long mId;
 
-    public Schedule(String day, String name, String time) {
+    public Schedule(long id, String day, String name, String time) {
         mDay = day;
         mName = name;
         mTime = time;
+        mId = id;
     }
 
     public String getDay() {
@@ -26,5 +28,9 @@ public class Schedule {
 
     public String getTime() {
         return mTime;
+    }
+
+    public long getId() {
+        return mId;
     }
 }

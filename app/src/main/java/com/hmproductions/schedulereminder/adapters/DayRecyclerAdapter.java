@@ -28,7 +28,7 @@ public class DayRecyclerAdapter extends RecyclerView.Adapter<DayRecyclerAdapter.
     private DayListClickListener mListener;
 
     public interface DayListClickListener {
-        void onDayClick(View view);
+        void onDayClick(long id);
     }
 
     public DayRecyclerAdapter(Context context, List<Schedule> list, DayListClickListener listener) {
@@ -79,7 +79,7 @@ public class DayRecyclerAdapter extends RecyclerView.Adapter<DayRecyclerAdapter.
 
         @Override
         public void onClick(View view) {
-            mListener.onDayClick(view);
+            mListener.onDayClick(mData.get(getAdapterPosition()).getId());
         }
     }
 }

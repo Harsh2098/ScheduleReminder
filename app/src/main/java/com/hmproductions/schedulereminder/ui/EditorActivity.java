@@ -79,6 +79,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         else
             setTitle("Add a new Task");
 
+        /* Getting weekday to update or insert with appropriate weekday */
         mCurrentWeekday = getIntent().getStringExtra(MainActivity.WEEKDAY_KEY);
 
         BindViews();
