@@ -1,22 +1,20 @@
 package com.hmproductions.schedulereminder.ui;
 
-import android.content.ContentValues;
-import android.content.DialogInterface;
+import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.hmproductions.schedulereminder.R;
 import com.hmproductions.schedulereminder.adapters.DayRecyclerAdapter;
@@ -28,10 +26,10 @@ import java.util.List;
 
 public class DayActivity
         extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>, DayRecyclerAdapter.DayListClickListener{
+        implements LoaderManager.LoaderCallbacks<Cursor>, DayRecyclerAdapter.DayListClickListener {
 
     private static final int LOADER_ID = 101;
-    private String[] weekdays = new String[] {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Weekday"};
+    private String[] weekdays = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Weekday"};
     private String currentWeekday;
 
     private DayRecyclerAdapter mAdapter;
@@ -43,14 +41,14 @@ public class DayActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day);
 
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         currentWeekday = weekdays[getIntent().getIntExtra(MainActivity.WEEKDAY_KEY, 7)];
         setTitle(currentWeekday);
 
-        add_floatingActionButton = (FloatingActionButton)findViewById(R.id.add_fab);
-        day_recyclerView = (RecyclerView)findViewById(R.id.day_recycler_View);
+        add_floatingActionButton = (FloatingActionButton) findViewById(R.id.add_fab);
+        day_recyclerView = (RecyclerView) findViewById(R.id.day_recycler_View);
         mAdapter = new DayRecyclerAdapter(this, null, this);
 
         day_recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,51 +60,21 @@ public class DayActivity
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-    private void AddFabClickListener()
-    {
+    private void AddFabClickListener() {
         add_floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(DayActivity.this);
-
-                final EditText nameInput = new EditText(DayActivity.this);
-                nameInput.setMaxLines(1);
-                nameInput.setHint("Eg. Digital Electronics");
-
-                builder
-                        .setTitle("New item Name")
-                        .setView(nameInput)
-                        .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                                if(!(nameInput.getText().toString().equals("") || nameInput.getText().toString().isEmpty())) {
-                                    ContentValues contentValues = new ContentValues();
-                                    contentValues.put(ScheduleContract.ScheduleEntry.COLUMN_DAY, currentWeekday);
-                                    contentValues.put(ScheduleContract.ScheduleEntry.COLUMN_NAME, nameInput.getText().toString());
-                                    getContentResolver().insert(ScheduleContract.CONTENT_URI, contentValues);
-                                    getSupportLoaderManager().restartLoader(LOADER_ID, null, DayActivity.this);
-                                }
-                                else {
-                                    Toast.makeText(DayActivity.this, "Text field was empty", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                Intent intent = new Intent(DayActivity.this, EditorActivity.class);
+                intent.putExtra(MainActivity.WEEKDAY_KEY, currentWeekday);
+                startActivity(intent);
             }
         });
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, ScheduleContract.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(this, ScheduleContract.CONTENT_URI, null, null, null, ScheduleContract.ScheduleEntry.COLUMN_TIME);
     }
 
     @Override
@@ -114,14 +82,16 @@ public class DayActivity
 
         List<Schedule> list = new ArrayList<>();
 
-        if(cursor != null) {
+        if (cursor != null) {
 
             while (cursor.moveToNext()) {
-                if(cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_DAY)).equals(currentWeekday)) {
+                if (cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_DAY)).equals(currentWeekday)) {
 
-                    list.add(new Schedule (
+                    list.add(new Schedule(
                             currentWeekday,
-                            cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME))));
+                            cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_NAME)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(ScheduleContract.ScheduleEntry.COLUMN_TIME)))
+                    );
                 }
             }
 
@@ -131,19 +101,22 @@ public class DayActivity
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        mAdapter.swapData(null);
     }
 
     @Override
-    public void onDayClick(int position) {
-        // TODO : Implement method to update value
+    public void onDayClick(View view) {
+        Intent intent = new Intent(DayActivity.this, EditorActivity.class);
+        intent.putExtra(MainActivity.WEEKDAY_KEY, currentWeekday);
+        intent.setData(ContentUris.withAppendedId(ScheduleContract.CONTENT_URI, day_recyclerView.getChildLayoutPosition(view)));
+        Log.v(":::", "Item ID= " + String.valueOf(day_recyclerView.getChildLayoutPosition(view)));
+        startActivity(intent);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             finish();
         }

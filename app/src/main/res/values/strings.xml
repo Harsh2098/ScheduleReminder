@@ -2,4 +2,10 @@
     <string name="app_name">Schedule Reminder</string>
     <string name="enable_auto_silent_mode">Enable Auto Silent Mode</string>
     <string name="volume_off_image">volume_off_image</string>
+    <string name="toggle_text">Use switch to toggle between\ndrop down menu and text field.</string>
+    <string name="name">NAME</string>
+    <string name="eg_digital_electronics">Eg. Digital Electronics</string>
+    <string name="time">TIME</string>
+    <string name="done">Done</string>
+    <string name="current_time">CURRENT TIME</string>
 </resources>

@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -57,6 +56,9 @@ public class MainActivity
         setupPreferences();
         RingerSwitchListener();
 
+        mAdapter = new ScheduleRecyclerAdapter(null, this, this);
+
+        schedule_recyclerView.setAdapter(mAdapter);
         schedule_recyclerView.setLayoutManager(new LinearLayoutManager(this));
         schedule_recyclerView.setHasFixedSize(true);
 
@@ -109,7 +111,7 @@ public class MainActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, ScheduleContract.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(this, ScheduleContract.CONTENT_URI, null, null, null, ScheduleEntry.COLUMN_TIME);
     }
 
     @Override
@@ -119,17 +121,16 @@ public class MainActivity
 
         if(cursor != null) {
 
-            cursor.moveToFirst();
             while (cursor.moveToNext()) {
 
                 list.add(new Schedule(
                         cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_DAY)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_NAME))
+                        cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_TIME))
                 ));
             }
 
-            mAdapter = new ScheduleRecyclerAdapter(list, this, this);
-            schedule_recyclerView.setAdapter(mAdapter);
+            mAdapter.swapData(list);
         }
 
         else

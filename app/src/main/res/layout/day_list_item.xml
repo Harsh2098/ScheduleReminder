@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="6dp"
+    android:layout_marginStart="6dp"
     android:layout_marginTop="10dp"
-    android:background="@android:color/background_light"
-    android:elevation="4dp"
-    android:orientation="horizontal"
-    android:padding="4dp">
+    android:background="@drawable/rounded_button"
+    android:elevation="8dp"
+    android:paddingBottom="20dp"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp"
+    android:paddingTop="20dp">
 
     <TextView
         android:id="@+id/title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
         android:text="Digital Electronics"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_textView"
+        android:text="10:30 a.m."
+        android:layout_alignParentEnd="true"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@android:color/background_dark"/>
+
+</RelativeLayout>

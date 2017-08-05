@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="22sp" />
+
+    <Switch
+        android:id="@+id/task_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/spinner"
+        android:layout_marginTop="16dp"
+        android:rotation="90"
+        android:thumbTint="@android:color/holo_green_light"
+        android:trackTint="@android:color/holo_orange_dark"
+        tools:targetApi="m" />
+
+    <TextView
+        android:id="@+id/toggle_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/task_switch"
+        android:layout_centerHorizontal="true"
+        android:text="@string/toggle_text"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/name_textView"
+        android:layout_marginStart="100sp" />
+
+    <EditText
+        android:id="@+id/task_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggle_textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:backgroundTint="@android:color/background_dark"
+        android:ems="10"
+        android:hint="@string/eg_digital_electronics"
+        android:inputType="textPersonName"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/timeHeading_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="22sp"
+        android:layout_below="@+id/task_editText"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/time_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_button"
+        android:text="@string/current_time"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_marginTop="10dp"
+        android:padding="4dp"
+        android:layout_below="@id/timeHeading_textView"/>
+
+</RelativeLayout>

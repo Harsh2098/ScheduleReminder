@@ -45,7 +45,7 @@ public class ScheduleProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         mDatabase = mDatabaseHelper.getReadableDatabase();
-        Cursor cursor = null;
+        Cursor cursor;
 
         switch (mUriMatcher.match(uri))
         {
@@ -62,6 +62,8 @@ public class ScheduleProvider extends ContentProvider {
             default : throw new IllegalArgumentException("Cannot serve URI request at this moment.");
         }
 
+        if(getContext() != null)
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -77,6 +79,10 @@ public class ScheduleProvider extends ContentProvider {
                 colID = mDatabase.insert(ScheduleEntry.TABLE_NAME, null, values);
                 if (colID == -1)
                     Toast.makeText(getContext(), "Failed to insert", Toast.LENGTH_SHORT).show();
+                else {
+                    if(getContext() != null)
+                        getContext().getContentResolver().notifyChange(uri, null);
+                }
                 break;
 
             default:

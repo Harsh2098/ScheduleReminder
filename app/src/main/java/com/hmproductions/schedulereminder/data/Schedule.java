@@ -8,11 +8,12 @@ package com.hmproductions.schedulereminder.data;
 
 public class Schedule {
 
-    private String mDay, mName;
+    private String mDay, mName, mTime;
 
-    public Schedule(String day, String name) {
+    public Schedule(String day, String name, String time) {
         mDay = day;
         mName = name;
+        mTime = time;
     }
 
     public String getDay() {
@@ -23,4 +24,7 @@ public class Schedule {
         return mName;
     }
 
+    public String getTime() {
+        return mTime;
+    }
 }

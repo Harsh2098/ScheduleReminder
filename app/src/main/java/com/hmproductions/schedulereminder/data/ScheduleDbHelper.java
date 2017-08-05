@@ -12,7 +12,7 @@ import com.hmproductions.schedulereminder.data.ScheduleContract.ScheduleEntry;
  * ScheduleDbHelper creates and deletes 'schedule' table when required.
  */
 
-public class ScheduleDbHelper extends SQLiteOpenHelper{
+class ScheduleDbHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 4;
 
@@ -30,7 +30,7 @@ public class ScheduleDbHelper extends SQLiteOpenHelper{
             "DROP TABLE IF EXISTS " + ScheduleEntry.TABLE_NAME;
 
 
-    public ScheduleDbHelper(Context context) {
+    ScheduleDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

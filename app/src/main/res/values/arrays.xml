@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_tasks">
+
+        <item>Circuit Theory</item>
+        <item>DC Machines and Transformers</item>
+        <item>Digital Electronics</item>
+        <item>Laplace Transforms</item>
+        <item>Power Generation Systems</item>
+        <item>Thermodynamics</item>
+        <item>Circuits Laboratory</item>
+        <item>Machines Laboratory</item>
+
+    </string-array>
+
+</resources>

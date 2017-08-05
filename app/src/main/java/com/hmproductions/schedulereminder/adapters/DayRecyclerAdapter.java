@@ -28,7 +28,7 @@ public class DayRecyclerAdapter extends RecyclerView.Adapter<DayRecyclerAdapter.
     private DayListClickListener mListener;
 
     public interface DayListClickListener {
-        void onDayClick(int position);
+        void onDayClick(View view);
     }
 
     public DayRecyclerAdapter(Context context, List<Schedule> list, DayListClickListener listener) {
@@ -49,6 +49,7 @@ public class DayRecyclerAdapter extends RecyclerView.Adapter<DayRecyclerAdapter.
 
         if(mData.size() > 0) {
             holder.title_textView.setText(mData.get(position).getName());
+            holder.time_textView.setText(mData.get(position).getTime());
         }
     }
 
@@ -66,18 +67,19 @@ public class DayRecyclerAdapter extends RecyclerView.Adapter<DayRecyclerAdapter.
 
     class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView title_textView;
+        TextView title_textView, time_textView;
 
         DayViewHolder(View itemView) {
             super(itemView);
 
             title_textView = (TextView)itemView.findViewById(R.id.title_textView);
+            time_textView = (TextView)itemView.findViewById(R.id.time_textView);
             itemView.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
-            mListener.onDayClick(getAdapterPosition());
+        public void onClick(View view) {
+            mListener.onDayClick(view);
         }
     }
 }

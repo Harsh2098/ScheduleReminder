@@ -20,7 +20,7 @@ public class ScheduleContract {
 
     public class ScheduleEntry implements BaseColumns
     {
-        public static final String COLUMN_ID = BaseColumns._ID;
+        static final String COLUMN_ID = BaseColumns._ID;
         public static final String COLUMN_DAY = "weekday";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_TIME = "time";
