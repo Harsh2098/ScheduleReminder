@@ -1,6 +1,8 @@
 package com.hmproductions.schedulereminder.ui;
 
 import android.app.TimePickerDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.hmproductions.schedulereminder.R;
+import com.hmproductions.schedulereminder.ScheduleWidget;
 import com.hmproductions.schedulereminder.data.ScheduleContract;
 import com.hmproductions.schedulereminder.data.ScheduleContract.ScheduleEntry;
 
@@ -54,6 +57,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             else
                 builder.append(hourOfDay%12);
             builder.append(":");
+
+            if(minute<10) builder.append("0");
             builder.append(minute);
 
             if(hourOfDay>12)
@@ -184,6 +189,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         else
             getContentResolver().update(mCurrentUri, contentValues, null, null);
+
+        // Update all live widgets
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, ScheduleWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.schedule_widget_gridView);
+
         return true;
     }
 

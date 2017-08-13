@@ -9,4 +9,7 @@
     <string name="done">Done</string>
     <string name="current_time">CURRENT TIME</string>
     <string name="auto_daily_notifications">Auto Daily Notifications</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_items_to_display">No items to display.</string>
 </resources>

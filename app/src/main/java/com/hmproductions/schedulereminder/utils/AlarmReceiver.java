@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 
@@ -66,6 +68,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     builder
                             .setContentIntent(contentIntent(context))
                             .setContentTitle("Today's Tasks")
+                            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                             .setSmallIcon(R.mipmap.ic_notification_icon)
                             .setContentText(stringBuilder.toString())
                             .setAutoCancel(true);
