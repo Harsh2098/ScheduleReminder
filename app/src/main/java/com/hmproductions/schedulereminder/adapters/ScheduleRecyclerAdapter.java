@@ -2,6 +2,7 @@ package com.hmproductions.schedulereminder.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
 
             String tasks = getScheduleList(weekdays[position]);
             holder.name_textView.setText(tasks);
+        } else {
+            holder.name_textView.setText(mContext.getString(R.string.no_items_to_display));
         }
 
     }
@@ -71,7 +74,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         String tasks = stringBuilder.toString();
 
         if(tasks.isEmpty() || tasks.equals(""))
-            return "No items to display.";
+            return mContext.getString(R.string.no_items_to_display);
 
         return tasks;
     }

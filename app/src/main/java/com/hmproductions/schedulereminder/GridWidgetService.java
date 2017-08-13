@@ -3,12 +3,15 @@ package com.hmproductions.schedulereminder;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.hmproductions.schedulereminder.data.Schedule;
 import com.hmproductions.schedulereminder.data.ScheduleContract;
+import com.hmproductions.schedulereminder.ui.DayActivity;
+import com.hmproductions.schedulereminder.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,10 +93,28 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         if(mData == null || mData.size() == 0) return null;
 
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
-        Log.v(":::",mData.get(position).getName());
         remoteViews.setTextViewText(R.id.title_textView, mData.get(position).getName());
         remoteViews.setTextViewText(R.id.time_textView, mData.get(position).getTime());
+
+        Bundle extras = new Bundle();
+        extras.putInt(MainActivity.WEEKDAY_KEY, getDayOfWeekNumber(mData.get(position).getDay()));
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+        remoteViews.setOnClickFillInIntent(R.id.widget_list_item_id, fillInIntent);
         return remoteViews;
+    }
+
+    private int getDayOfWeekNumber(String weekday) {
+        switch (weekday) {
+            case "Monday" : return 0;
+            case "Tuesday": return 1;
+            case "Wednesday" : return 2;
+            case "Thursday": return 3;
+            case "Friday" : return 4;
+            case "Saturday": return 5;
+            case "Sunday" : return 6;
+            default: return 7;
+        }
     }
 
     @Override

@@ -139,7 +139,6 @@ public class MainActivity
         notification_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // TODO : Change this Time
                 if(isChecked) {
                     notificationSwitchMode = true;
                     Set7AMAlarm();

@@ -12,6 +12,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -225,6 +226,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.delete_action :
                 getContentResolver().delete(mCurrentUri, null, null);
                 NavUtils.navigateUpFromSameTask(this);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -237,9 +239,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursor.moveToFirst();
-        task_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_NAME)));
-        timeButton.setText(cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_TIME)));
+
+        if(cursor != null && cursor.getCount()>0) {
+
+            cursor.moveToFirst();
+            task_editText.setText(cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_NAME)));
+            timeButton.setText(cursor.getString(cursor.getColumnIndexOrThrow(ScheduleEntry.COLUMN_TIME)));
+        }
     }
 
     @Override

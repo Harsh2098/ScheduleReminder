@@ -1,10 +1,13 @@
 package com.hmproductions.schedulereminder;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.hmproductions.schedulereminder.ui.DayActivity;
 
 import java.util.Calendar;
 
@@ -26,6 +29,15 @@ public class ScheduleWidget extends AppWidgetProvider {
 
         // Setting adapter to widget GridView.
         views.setRemoteAdapter(R.id.schedule_widget_gridView, new Intent(context, GridWidgetService.class));
+        views.setEmptyView(R.id.schedule_widget_gridView, R.id.empty_view_textView);
+
+        PendingIntent appPendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                new Intent(context, DayActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        views.setPendingIntentTemplate(R.id.schedule_widget_gridView, appPendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
